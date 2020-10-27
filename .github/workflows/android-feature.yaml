@@ -1,12 +1,11 @@
-name: Android Main
+name: Android Feature
 
 on:
-  pull_request:
-    branches:
-      - 'main'
   push:
     branches:
-      - 'main'
+      - '*'
+      - '!main'
+      - '!release*'
 
 jobs:
 
@@ -19,3 +18,18 @@ jobs:
         uses: actions/checkout@v2
       - name: Run Unit tests
         run: bash ./gradlew test --stacktrace
+
+    apk:
+      name: Generate APK
+      runs-on: ubuntu-latest
+
+      steps:
+        - name: Checkout the code
+          uses: actions/checkout@v2
+        - name: Build debug APK
+          run: bash ./gradlew assembleDebug --stacktrace
+        - name: Upload APK
+          uses: actions/upload-artifact@v2
+          with:
+            name: app
+            path: app/build/outputs/apk/debug/app-debug.apk

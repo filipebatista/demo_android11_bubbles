@@ -57,33 +57,37 @@ class AndroidBubbleNotificationView(
             )
             shortcutManager.pushDynamicShortcut(shortcut)
 
-            builder.setBubbleMetadata(bubbleData)
-            builder.setStyle(
-                Notification.MessagingStyle(person).addMessage(
-                    Notification.MessagingStyle.Message(
-                        simpleMessage.text,
-                        System.currentTimeMillis(),
-                        person
+            with(builder) {
+                setBubbleMetadata(bubbleData)
+                setStyle(
+                    Notification.MessagingStyle(person).addMessage(
+                        Notification.MessagingStyle.Message(
+                            simpleMessage.text,
+                            System.currentTimeMillis(),
+                            person
+                        )
                     )
                 )
-            )
-                .setShortcutId(shortcut.id)
-                .addPerson(person)
+                    .setShortcutId(shortcut.id)
+                    .addPerson(person)
+            }
+
 
         }
 
         // The user can turn off the bubble in system settings. In that case, this notification
         // is shown as a normal notification instead of a bubble. Make sure that this
         // notification works as a normal notification as well.
-        builder.setContentTitle(
-            context.resources.getString(
-                R.string.message_from,
-                simpleMessage.sender
+        with(builder) {
+            setContentTitle(
+                context.resources.getString(
+                    R.string.message_from,
+                    simpleMessage.sender
+                )
             )
-        )
-            .setSmallIcon(R.drawable.ic_stat_notification)
-            .setCategory(Notification.CATEGORY_MESSAGE)
-            .setContentIntent(
+            setSmallIcon(R.drawable.ic_stat_notification)
+            setCategory(Notification.CATEGORY_MESSAGE)
+            setContentIntent(
                 PendingIntent.getActivity(
                     context,
                     REQUEST_CONTENT,
@@ -93,7 +97,9 @@ class AndroidBubbleNotificationView(
                     PendingIntent.FLAG_UPDATE_CURRENT
                 )
             )
-            .setShowWhen(true)
+            setShowWhen(true)
+        }
+
 
         notificationManager.notify(simpleMessage.id, builder.build())
     }
