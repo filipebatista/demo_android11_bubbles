@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">MyBubble</string>
+    <string name="message_from">Message from %1$s</string>
+    <string name="btn_show_bubble_notification">Show Bubble Notification</string>
+    <string name="notification_channel_name_bubble">Bubbles messages</string>
+    <string name="hello_from">Hello %1$s</string>
+</resources>
