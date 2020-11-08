@@ -42,7 +42,7 @@ class AndroidBubbleNotificationView(
 
         val builder = getNotificationBuilder()
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             val person = Person.Builder()
                 .setName(simpleMessage.sender)
                 .setIcon(icon)
@@ -55,7 +55,7 @@ class AndroidBubbleNotificationView(
                 icon,
                 person
             )
-            shortcutManager.pushDynamicShortcut(shortcut)
+            addDynamicShortcut(shortcut)
 
             with(builder) {
                 setBubbleMetadata(bubbleData)
@@ -110,7 +110,15 @@ class AndroidBubbleNotificationView(
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.R)
+    private fun addDynamicShortcut(shortcut: ShortcutInfo) {
+        if (atLeastAndroid11()) {
+            shortcutManager.pushDynamicShortcut(shortcut)
+        } else {
+            shortcutManager.addDynamicShortcuts(listOf(shortcut))
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.Q)
     private fun createBubbleMetadata(
         contentUri: Uri,
         icon: Icon
@@ -128,7 +136,14 @@ class AndroidBubbleNotificationView(
             )
 
         // Create bubble metadata
-        return Notification.BubbleMetadata.Builder(bubbleIntent, icon)
+        val builder = if (atLeastAndroid11()) {
+            Notification.BubbleMetadata.Builder(bubbleIntent, icon)
+        } else {
+            Notification.BubbleMetadata.Builder()
+                .setIntent(bubbleIntent)
+                .setIcon(icon)
+        }
+        return builder
             .setDesiredHeightResId(R.dimen.bubble_height)
             .setAutoExpandBubble(true)
             .setSuppressNotification(true)
@@ -144,7 +159,7 @@ class AndroidBubbleNotificationView(
                     NotificationManager.IMPORTANCE_HIGH
                 )
 
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                if (atLeastAndroid11()) {
                     notificationChannel.setAllowBubbles(true)
                 }
 
@@ -152,6 +167,8 @@ class AndroidBubbleNotificationView(
             }
         }
     }
+
+    private fun atLeastAndroid11() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.R
 
     private fun clearDynamicShortCuts() {
         shortcutManager.removeAllDynamicShortcuts()
@@ -161,7 +178,7 @@ class AndroidBubbleNotificationView(
         return "app://mybubble.filipebaptista.com/message/$text".toUri()
     }
 
-    @RequiresApi(Build.VERSION_CODES.R)
+    @RequiresApi(Build.VERSION_CODES.Q)
     private fun createDynamicShortcut(
         message: SimpleMessage,
         icon: Icon,
