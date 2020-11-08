@@ -5,7 +5,6 @@ import androidx.lifecycle.AndroidViewModel
 import com.filipebaptista.mybubble.R
 import com.filipebaptista.mybubble.data.message.SimpleMessage
 import com.filipebaptista.mybubble.notification.BubbleNotification
-import kotlin.random.Random
 
 class MainViewModel(
     application: Application,

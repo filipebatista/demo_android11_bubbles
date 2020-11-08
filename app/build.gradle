@@ -15,6 +15,8 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        setProperty("archivesBaseName", "${applicationId}_V${versionName}_${new Date().format('dd_MM_yyyy-hh_mm')}");
     }
 
     buildTypes {
@@ -22,6 +24,12 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+        test.java.srcDirs += 'src/test/kotlin'
+        androidTest.java.srcDirs += 'src/androidTest/kotlin'
     }
 
     buildFeatures {
@@ -36,6 +44,13 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
+    testOptions {
+        unitTests {
+            returnDefaultValues true
+            includeAndroidResources true
+        }
+    }
 }
 
 dependencies {
@@ -48,4 +63,20 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
     implementation 'androidx.fragment:fragment-ktx:1.2.5'
+
+
+    debugImplementation "androidx.fragment:fragment-testing:1.2.5"
+    debugImplementation 'androidx.test:core:1.3.0'
+
+    testImplementation 'androidx.test:runner:1.3.0'
+    testImplementation 'androidx.test:rules:1.3.0'
+    testImplementation 'androidx.test.ext:junit:1.1.2'
+    testImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    testImplementation 'androidx.test.ext:junit-ktx:1.1.2'
+    testImplementation 'androidx.test:core:1.3.0'
+    testImplementation 'androidx.test:core-ktx:1.3.0'
+
+    testImplementation "org.robolectric:robolectric:4.5-alpha-2"
+    testImplementation "io.mockk:mockk:1.10.2"
+
 }

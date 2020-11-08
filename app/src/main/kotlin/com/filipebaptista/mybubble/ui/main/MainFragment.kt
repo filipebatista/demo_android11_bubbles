@@ -26,9 +26,4 @@ class MainFragment : Fragment(R.layout.main_fragment) {
             viewModel.showBubbleNotification()
         }
     }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-    }
-
 }

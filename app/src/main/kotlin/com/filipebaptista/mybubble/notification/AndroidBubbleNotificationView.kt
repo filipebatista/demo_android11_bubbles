@@ -59,17 +59,15 @@ class AndroidBubbleNotificationView(
 
             with(builder) {
                 setBubbleMetadata(bubbleData)
-                setStyle(
-                    Notification.MessagingStyle(person).addMessage(
-                        Notification.MessagingStyle.Message(
-                            simpleMessage.text,
-                            System.currentTimeMillis(),
-                            person
-                        )
+                style = Notification.MessagingStyle(person).addMessage(
+                    Notification.MessagingStyle.Message(
+                        simpleMessage.text,
+                        System.currentTimeMillis(),
+                        person
                     )
                 )
-                    .setShortcutId(shortcut.id)
-                    .addPerson(person)
+                setShortcutId(shortcut.id)
+                addPerson(person)
             }
 
 
@@ -138,18 +136,19 @@ class AndroidBubbleNotificationView(
     }
 
     private fun setUpNotificationChannels() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             if (notificationManager.getNotificationChannel(CHANNEL_NEW_BUBBLE) == null) {
-                notificationManager.createNotificationChannel(
-                    NotificationChannel(
-                        CHANNEL_NEW_BUBBLE,
-                        context.getString(R.string.notification_channel_name_bubble),
-                        // The importance must be IMPORTANCE_HIGH to show Bubbles.
-                        NotificationManager.IMPORTANCE_HIGH
-                    ).apply {
-                        setAllowBubbles(true)
-                    }
+                val notificationChannel = NotificationChannel(
+                    CHANNEL_NEW_BUBBLE,
+                    context.getString(R.string.notification_channel_name_bubble),
+                    NotificationManager.IMPORTANCE_HIGH
                 )
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                    notificationChannel.setAllowBubbles(true)
+                }
+
+                notificationManager.createNotificationChannel(notificationChannel)
             }
         }
     }
