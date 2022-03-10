@@ -9,6 +9,8 @@ updates:
     directory: "/app/" # Location of package manifests
     schedule:
       interval: "daily"
+      time: "10:43"
+      timezone: "Europe/Lisbon"
     open-pull-requests-limit: 10
     labels:
       - "dependabot"
