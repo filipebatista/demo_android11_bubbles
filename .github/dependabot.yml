@@ -4,24 +4,17 @@
 # https://docs.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
 
 version: 2
-registries:
-  maven-google:
-    type: maven-repository
-    url: maven.google.com
 
 updates:
   - package-ecosystem: "gradle" # See documentation for possible values      
     directory: "/app/" # Location of package manifests
     schedule:
       interval: "daily"
-      time: "11:17"
+      time: "11:20"
       timezone: "Europe/Lisbon"
     open-pull-requests-limit: 10        
-    registries:
-      - maven-google
+    registries: *
     labels:
       - "dependabot"
       - "dependencies"
-    allow:
-      - dependency-type: "production"
 
