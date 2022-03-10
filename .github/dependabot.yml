@@ -13,8 +13,6 @@ updates:
       time: "11:20"
       timezone: "Europe/Lisbon"
     open-pull-requests-limit: 10        
-    registries: *
     labels:
       - "dependabot"
       - "dependencies"
-
