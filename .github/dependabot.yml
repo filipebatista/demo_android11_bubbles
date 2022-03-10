@@ -6,7 +6,7 @@
 version: 2
 updates:
   - package-ecosystem: "gradle" # See documentation for possible values
-    directory: "/" # Location of package manifests
+    directory: "/app/" # Location of package manifests
     schedule:
       interval: "daily"
     open-pull-requests-limit: 10
@@ -14,4 +14,6 @@ updates:
     labels:
       - "dependabot"
       - "dependencies"
+    allow:
+      - dependency-type: "production"
 
