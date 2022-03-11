@@ -16,6 +16,8 @@ updates:
     labels:
       - "dependabot"
       - "dependencies"
+    ignore:   
+      - dependency-name: "*"
     allow:
       - dependency-type: "production"
       - dependency-name: "org.jetbrains.kotlin:kotlin-stdlib"
