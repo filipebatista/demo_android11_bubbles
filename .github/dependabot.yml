@@ -7,10 +7,10 @@ version: 2
 
 updates:
   - package-ecosystem: "gradle" # See documentation for possible values      
-    directory: "/app/" # Location of package manifests
+    directory: "/" # Location of package manifests
     schedule:
       interval: "daily"
-      time: "11:20"
+      time: "09:28"
       timezone: "Europe/Lisbon"
     open-pull-requests-limit: 10        
     labels:
