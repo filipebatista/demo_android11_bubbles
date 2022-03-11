@@ -20,5 +20,7 @@ updates:
       - dependency-type: "production"
       - dependency-name: "org.jetbrains.kotlin:kotlin-stdlib"
       - dependency-name: "com.twilio:voice-android"
+      - dependency-name: "com.twilio:conversations-android"
+
     ignore:   
       - dependency-name: "*"
